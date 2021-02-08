@@ -18,20 +18,25 @@ class _PerguntaAppState extends State<PerguntaApp> {
     final List<Map<String, Object>> perguntas = [
       {
         'texto': 'Qual é a sua cor favorita?',
-        'respostas': ['Preto','Vermelho','Verde','Branco'],
+        'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
       },
       {
         'texto': 'Qual é o seu anumal favorito?',
-        'respostas': ['Coelho','Cobra','Elefante','Leão'],
+        'respostas': ['Coelho', 'Cobra', 'Elefante', 'Leão'],
       },
       {
         'texto': 'Qual é o seu instrutor favorito?',
-        'respostas': ['Maria','João','Cristiano','Pedro'],
+        'respostas': ['Maria', 'João', 'Cristiano', 'Pedro'],
       },
-      
     ];
 
-    // Me
+    // Metodo para pegar a resposta selecioanda
+    List<Widget> respostas = [];
+
+    // Verificando a resposta selecionada
+    for (String textoResp in perguntas[_perguntaSelecionada]['respostas']) {
+      respostas.add(Resposta(textoResp, _responder));
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -42,9 +47,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         body: Column(
           children: <Widget>[
             Questao(perguntas[_perguntaSelecionada]['texto']),
-            Resposta('Resposta 1', _responder),
-            Resposta('Resposta 2', _responder),
-            Resposta('Resposta 3', _responder),
+            ...respostas,
           ],
         ),
       ),
@@ -53,7 +56,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
 }
 
 class PerguntaApp extends StatefulWidget {
-
   _PerguntaAppState createState() {
     return _PerguntaAppState();
   }
