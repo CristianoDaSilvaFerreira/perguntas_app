@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './questao.dart';
-import './resposta.dart';
+import './questionario.dart';
+import './resultado.dart';
 
 main() => runApp(PerguntaApp());
 
@@ -30,18 +30,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
     }
   }
 
-  // Metodo para verificar se tem uma pergunta selecionada
   bool get temPerguntaSelecionada {
     return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Metodo para pegar a resposta selecioanda
-    List<String> respostas = temPerguntaSelecionada
-        ? _perguntas[_perguntaSelecionada]['respostas']
-        : null;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -49,20 +43,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
           title: Text('Pereguntas'),
         ),
         body: temPerguntaSelecionada
-            ? Column(
-                children: <Widget>[
-                  Questao(_perguntas[_perguntaSelecionada]['texto']),
-                  ...respostas.map((t) => Resposta(t, _responder)).toList(),
-                ],
+            ? Questionario(
+                perguntas: _perguntas,
+                perguntaSelecionada: _perguntaSelecionada,
+                quantoResponder: _responder,
               )
-            : Center(
-                child: Text(
-                  'Parabéns!!',
-                  style: TextStyle(
-                    fontSize: 28,
-                  ),
-                ),
-              ),
+            : Resultado(),
       ),
     );
   }
