@@ -7,7 +7,6 @@ main() => runApp(PerguntaApp());
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
   var _pontuacaoTotal = 0;
-
   final _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita?',
@@ -19,7 +18,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
       ],
     },
     {
-      'texto': 'Qual é o seu anumal favorito?',
+      'texto': 'Qual é o seu animal favorito?',
       'respostas': [
         {'texto': 'Coelho', 'pontuacao': 10},
         {'texto': 'Cobra', 'pontuacao': 5},
@@ -30,12 +29,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
     {
       'texto': 'Qual é o seu instrutor favorito?',
       'respostas': [
-        {'texto': 'Maria', 'pontuacao': 10},
-        {'texto': 'João', 'pontuacao': 5},
-        {'texto': 'Cristiano', 'pontuacao': 3},
+        {'texto': 'Cristiano', 'pontuacao': 10},
+        {'texto': 'Maria', 'pontuacao': 5},
+        {'texto': 'João', 'pontuacao': 3},
         {'texto': 'Pedro', 'pontuacao': 1},
       ],
-    },
+    }
   ];
 
   void _responder(int pontuacao) {
@@ -45,8 +44,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
         _pontuacaoTotal += pontuacao;
       });
     }
+  }
 
-    print(_pontuacaoTotal);
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   bool get temPerguntaSelecionada {
@@ -59,15 +63,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Pereguntas'),
+          title: Text('Perguntas'),
         ),
         body: temPerguntaSelecionada
             ? Questionario(
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
-                quantoResponder: _responder,
+                quandoResponder: _responder,
               )
-            : Resultado(),
+            : Resultado(_pontuacaoTotal, _reiniciarQuestionario),
       ),
     );
   }
