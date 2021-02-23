@@ -51,6 +51,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
       _perguntaSelecionada = 0;
       _pontuacaoTotal = 0;
     });
+
+    
   }
 
   bool get temPerguntaSelecionada {
